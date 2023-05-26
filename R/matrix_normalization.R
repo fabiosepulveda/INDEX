@@ -1,7 +1,7 @@
 #' Normalization
 #'
 #' @description
-#' This function Computes the normalized matrix.
+#' This function computes the normalized matrix.
 #'
 #' @param x A numeric matrix or data frame which provides the data set with all the study variables.
 #' @param polarity A numeric vector which indicates the relation (polarity) among the latent phenomenon and all the study variables.By default is null, if the relation is negative.
@@ -9,11 +9,6 @@
 #' @return
 #' Return the normalizex matrix.
 #'
-#' @importFrom car vif
-#' @importFrom stats lm
-#' @importFrom dplyr %>%
-#' @importFrom dplyr bind_rows
-#' @importFrom stats as.formula
 #'
 #' @author
 #' Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
@@ -40,27 +35,9 @@ matrix_normalization <- function(x,polarity =NULL){
     warning("there are NA's in the data")
   }
   if (!is.matrix(x)) {
-    warning("the argument 'matriz' woulx be a matrix object")
+    warning("the argument 'matriz' would be a matrix object")
     x <- as.matrix(x)
   }
-
-  check_multicollinearity <- function(x){
-    x <- x %>% as.data.frame()
-    vars <- colnames(x)
-    l <- data.frame()
-    for (variable in vars) {
-      lm1<-lm( as.formula( paste0(variable,"~.")),data=x)
-      options(scipen = 9990)
-      v <- vif(lm1)
-      l <- bind_rows(l,v)
-    }
-    rownames(l) <-  vars
-    l[is.na(l)] <- 0
-    if(length(l[l>10] )>0){
-      warning("there is variance inflation factor greater than 10")
-    }
-  }
-  check_multicollinearity(x)
 
   # Function Normalization
   normalization <- function(x,polarity=NULL){
