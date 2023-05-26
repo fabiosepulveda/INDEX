@@ -18,7 +18,8 @@ RoxygenNote: 7.2.3
 Imports: 
     car,
     dplyr,
-    stats
+    stats,
+    ggplot2
 URL: https://github.com/fabiosepulveda/index
 BugReports: https://github.com/fabiosepulveda/index/issues
 Depends: 
