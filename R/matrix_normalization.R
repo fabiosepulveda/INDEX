@@ -7,7 +7,7 @@
 #' @param polarity A numeric vector which indicates the relation (polarity) among the latent phenomenon and all the study variables.By default is null, if the relation is negative.
 #'
 #' @return
-#' Return the normalizex matriz.
+#' Return the normalizex matriz.NN.
 #'
 #' @importFrom car vif
 #' @importFrom stats lm
