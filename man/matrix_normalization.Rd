@@ -12,7 +12,11 @@ matrix_normalization(x, polarity = NULL)
 \item{polarity}{A numeric vector which indicates the relation (polarity) among the latent phenomenon and all the study variables.By default is null, if the relation is negative.}
 }
 \value{
+<<<<<<< HEAD
 Return the normalizex matrix. nnn
+=======
+Return the normalizex matriz.
+>>>>>>> 1e21aaff21f3a3316a73860b370b3896628444d1
 }
 \description{
 This function Computes the normalized matrix.
