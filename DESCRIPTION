@@ -19,4 +19,5 @@ Imports:
     car,
     dplyr,
     stats
-    
+URL: https://github.com/fabiosepulveda/index
+BugReports: https://github.com/fabiosepulveda/index/issues
