@@ -21,3 +21,6 @@ Imports:
     stats
 URL: https://github.com/fabiosepulveda/index
 BugReports: https://github.com/fabiosepulveda/index/issues
+Depends: 
+    R (>= 2.10)
+LazyData: true
