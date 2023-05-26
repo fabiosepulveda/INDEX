@@ -4,7 +4,7 @@
 \alias{dp2}
 \title{DP2 Function}
 \usage{
-dp2(x, iterations, epsilon = 1e-04)
+dp2(x, iterations, epsilon = 0.0001)
 }
 \arguments{
 \item{x}{A numeric matrix or data frame which provides the data set with all the study variables.}
@@ -17,7 +17,7 @@ dp2(x, iterations, epsilon = 1e-04)
 Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity
 }
 \description{
-This function computes a
+This function computes a indicator
 }
 \examples{
 
@@ -25,7 +25,7 @@ data(NUTS2)
 C <- NUTS2[,4:11]
 polarity <- c(5,6,7,8)
 C <- matrix_normalization(C, polarity)
-dp2(C, iterations=10)
+dp2(C, iterations=10 )
 
 }
 \references{

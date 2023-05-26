@@ -1,7 +1,7 @@
 #' DP2 Function
 #'
 #' @description
-#' This function computes a
+#' This function computes a indicator
 #'
 #' @param x A numeric matrix or data frame which provides the data set with all the study variables.
 #' @param epsilon  A double maximum number of distance accepted.
@@ -33,7 +33,7 @@
 #' C <- NUTS2[,4:11]
 #' polarity <- c(5,6,7,8)
 #' C <- matrix_normalization(C, polarity)
-#' dp2(C, iterations=10)
+#' dp2(C, iterations=10 )
 #'
 #' @export
 #'
