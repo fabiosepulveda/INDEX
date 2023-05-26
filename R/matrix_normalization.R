@@ -24,6 +24,14 @@
 #' @seealso
 #' Fabio
 #'
+#' @examples
+#' # example code
+#'
+#' data(NUTS2)
+#' A <- NUTS2[,4:11]
+#' polarity <- c(5,6,7,8)
+#' matrix_normalization(A,polarity)
+#'
 #' @export
 
 matrix_normalization <- function(x,polarity =NULL){

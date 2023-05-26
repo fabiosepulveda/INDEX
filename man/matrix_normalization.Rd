@@ -17,6 +17,15 @@ Return the normalizex matrix.
 \description{
 This function Computes the normalized matrix.
 }
+\examples{
+# example code
+
+data(NUTS2)
+A <- NUTS2[,4:11]
+polarity <- c(5,6,7,8)
+matrix_normalization(A,polarity)
+
+}
 \references{
 Jiménez-Fernández, E., Sánchez, A., & Ortega-Pérez, M. (2022). Dealing with weighting scheme in composite indicators: an unsupervised distance-machine learning proposal for quantitative data. Socio-Economic Planning Sciences, 83, 101339.
 }
