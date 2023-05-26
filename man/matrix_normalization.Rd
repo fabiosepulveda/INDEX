@@ -18,7 +18,6 @@ Return the normalizex matrix.
 This function Computes the normalized matrix.
 }
 \examples{
-# example code
 
 data(NUTS2)
 A <- NUTS2[,4:11]

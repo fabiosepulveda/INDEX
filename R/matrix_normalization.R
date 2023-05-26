@@ -25,7 +25,6 @@
 #' Fabio
 #'
 #' @examples
-#' # example code
 #'
 #' data(NUTS2)
 #' A <- NUTS2[,4:11]
