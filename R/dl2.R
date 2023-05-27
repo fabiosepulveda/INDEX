@@ -1,5 +1,4 @@
 #' DL2 Function
-#' @name dl2
 #'
 #' @description
 #' This function computes a indicator
@@ -18,7 +17,7 @@
 #' @importFrom stats lm
 #' @importFrom stats cor
 #' @importFrom stats cor.test
-#' @importFrom stats filter
+#' @importFrom dplyr filter
 #' @importFrom stats predict
 #' @importFrom dplyr %>%
 #' @importFrom dplyr bind_rows
@@ -49,7 +48,8 @@
 #' data(NUTS2)
 #' C <- NUTS2[,4:11]
 #' polarity <- c(5,6,7,8)
-#' C <- matrix_normalization(C, polarity)
+#' dl2(C, polarity = polarity,  alpha = 0.05,
+#' iterations = 20,tau = 0.9,prop_split = 0.8,degrees = 1:2   )
 #'
 #' @export
 #'
@@ -143,8 +143,9 @@ dl2 <-function(x, polarity = NULL,alpha=0.05,iterations,tau,prop_split,degrees){
     resultsOpt <- tuned_mars$results %>%
       filter(nprune==tuned_mars$bestTune$nprune, degree==tuned_mars$bestTune$degree)
     # Now, we want to check our data on the test set.
-    test.features = subset(vul_test, select=-c("C.Ind"))
-    test.target = subset(vul_test, select=c("C.Ind") )[,1]
+
+    test.features = subset(vul_test, select=-C.Ind)
+    test.target = subset(vul_test, select=C.Ind )[,1]
     predictions = predict(tuned_mars, newdata = test.features)
     # RMSE
     RMSEtestPredictError <- sqrt(mean((test.target - predictions)^2))
@@ -228,4 +229,4 @@ dl2 <-function(x, polarity = NULL,alpha=0.05,iterations,tau,prop_split,degrees){
   ) ))
 }
 
-utils::globalVariables(c("nprune", "degree"))
+utils::globalVariables(c("nprune", "degree","C.Ind"))

@@ -32,7 +32,8 @@ This function computes a indicator
 data(NUTS2)
 C <- NUTS2[,4:11]
 polarity <- c(5,6,7,8)
-C <- matrix_normalization(C, polarity)
+dl2(C, polarity = polarity,  alpha = 0.05,
+iterations = 20,tau = 0.9,prop_split = 0.8,degrees = 1:2   )
 
 }
 \references{
