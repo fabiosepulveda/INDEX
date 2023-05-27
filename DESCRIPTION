@@ -16,12 +16,15 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-    car,
-    dplyr,
+    car (>= 3.1.2),
+    dplyr (>= 1.1.0),
     stats,
-    ggplot2
+    ggplot2 (>= 3.4.0),
+    corrgram (>= 1.14),
+    vip (>= 0.3.2),
+    utils
 URL: https://github.com/fabiosepulveda/index
 BugReports: https://github.com/fabiosepulveda/index/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10), caret, rsample
 LazyData: true
