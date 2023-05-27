@@ -4,7 +4,7 @@
 \alias{dp2}
 \title{DP2 Function}
 \usage{
-dp2(x, iterations, epsilon = 0.0001)
+dp2(x, iterations, epsilon = 1e-04)
 }
 \arguments{
 \item{x}{A numeric matrix or data frame which provides the data set with all the study variables.}
