@@ -9,24 +9,24 @@
 
 A data frame with 316 rows (houses) and 7 columns (variables):
 \describe{
-\item{PURCHASE}{Region number}
-\item{FLOORSZ}{Region codes}
-\item{BATH2}{Region name}
-\item{GARAGE1}{Male unemployment. Unemployment rate \% from 20 to 64 years (male).}
-\item{BEDS2}{Female unemployment. Unemployment rate \% from 20 to 64 years (female).}
-\item{UNEMPLOY}{Crude rate of net migration plus statistical adjustment.}
-\item{PROF}{Number of deaths by assault and homicide divided by population and then multiplied by 100,000 (crude death rate).}
+\item{PURCHASE}{Purchase price of the property.}
+\item{FLOORSZ}{Size of the property in square metres.}
+\item{BATH2}{Is 1 if the property has 2 or more bathrooms, 0 otherwise.}
+\item{GARAGE1}{Is 1 if the property has one or more garages, 0 otherwise.}
+\item{BEDS2}{Is 1 if the property has 2 or more bedrooms, 0 otherwise.}
+\item{UNEMPLOY}{Rate of unemployment in the census ward in which the house is located.}
+\item{PROF}{is the percentage of the workforce in professional or managerial occupations in the census enumeration district in which the house is located.}
 
 }
 }
-}
-\source{
-\url{https://ec.europa.eu/eurostat}
 }
 \usage{
 LondonHouse
 }
 \description{
 A subset of data with London house price data set.
+}
+\references{
+Fotheringham, A.S., Brunsdon, C., and Charlton, M.E. (2002), Geographically Weighted Regression: The Analysis of Spatially Varying Relationships, Chichester: Wiley.
 }
 \keyword{datasets}
