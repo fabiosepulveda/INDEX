@@ -1,0 +1,18 @@
+#' London house price
+#'
+#' A subset of data with London house price data set.
+#'
+#' @format ## `LondonHouse`
+#' A data frame with 316 rows (houses) and 7 columns (variables):
+#' \describe{
+#'   \item{PURCHASE}{Region number}
+#'   \item{FLOORSZ}{Region codes}
+#'   \item{BATH2}{Region name}
+#'   \item{GARAGE1}{Male unemployment. Unemployment rate % from 20 to 64 years (male).}
+#'   \item{BEDS2}{Female unemployment. Unemployment rate % from 20 to 64 years (female).}
+#'   \item{UNEMPLOY}{Crude rate of net migration plus statistical adjustment.}
+#'   \item{PROF}{Number of deaths by assault and homicide divided by population and then multiplied by 100,000 (crude death rate).}
+#'
+#' }
+#' @source <https://ec.europa.eu/eurostat>
+"LondonHouse"

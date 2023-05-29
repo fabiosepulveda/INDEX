@@ -17,6 +17,16 @@ Return a data frame with quantified data.
 \description{
 This function quantifies qualitative variables.
 }
+\examples{
+
+data(LondonHouse)
+LondonHouse$BATH2 = factor(LondonHouse$BATH2)
+LondonHouse$GARAGE1 = factor(LondonHouse$GARAGE1)
+LondonHouse$BEDS2 = factor(LondonHouse$BEDS2)
+qualitative = c(3,4,5)
+quantify(LondonHouse,qualitative)
+
+}
 \references{
 Gifi, A. (1990). Nonlinear Multivariate Analysis. New York: Wiley
 }
