@@ -11,7 +11,7 @@
 #'   \item{GARAGE1}{Is 1 if the property has one or more garages, 0 otherwise.}
 #'   \item{BEDS2}{Is 1 if the property has 2 or more bedrooms, 0 otherwise.}
 #'   \item{UNEMPLOY}{Rate of unemployment in the census ward in which the house is located.}
-#'   \item{PROF}{is the percentage of the workforce in professional or managerial occupations in the census enumeration district in which the house is located.}
+#'   \item{PROF}{Is the percentage of the workforce in professional or managerial occupations in the census enumeration district in which the house is located.}
 #'
 #' }
 #' @references Fotheringham, A.S., Brunsdon, C., and Charlton, M.E. (2002), Geographically Weighted Regression: The Analysis of Spatially Varying Relationships, Chichester: Wiley.
