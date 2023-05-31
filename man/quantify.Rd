@@ -15,7 +15,7 @@ quantify(x, y)
 Return a data frame with quantified data.
 }
 \description{
-This function quantifies qualitative variables.
+This function quantifies qualitative variable.
 }
 \examples{
 

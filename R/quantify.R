@@ -1,13 +1,15 @@
 #' Quantification
 #'
 #' @description
-#' This function quantifies qualitative variables.
+#' This function quantifies qualitative variable.
 #'
 #' @param x A data frame which provides the data set with all the study variables.
 #' @param y A numeric vector which indicates the position of the columns of type factor.
 #'
 #' @return
 #' Return a data frame with quantified data.
+#'
+#' @importFrom Gifi homals
 #'
 #' @author
 #' Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
