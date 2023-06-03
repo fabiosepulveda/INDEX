@@ -36,4 +36,5 @@ Fabio
 }
 \author{
 Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
+Andrés Vinueza:   \email{andres.vinueza@epn.edu.ec}
 }

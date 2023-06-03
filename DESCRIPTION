@@ -2,15 +2,14 @@ Package: index
 Title: Composite Index
 Version: 1.0-5
 Authors@R: c(
-  person("Eduardo", "Jiménez-Fernández", role="aut", email="edjimfer@ugr.es",comment = c(ORCID = "0000")),
+  person("Eduardo", "Jiménez-Fernández", role=c("aut"), email="edjimfer@ugr.es",comment = c(ORCID = "0000")),
   person("Angeles", "Sánchez", role="aut", email="sancheza@ugr.es",comment = c(ORCID = "0000")),
   person("Fabio H","Sepúlveda-Murillo",role=c("aut","cre"), email="fhsepulveda@udemedellin.edu.co",comment = c(ORCID = "0000-0001-7662-5419")),
-  person("Andrés", "Vinueza", role="aut", email="andresarmand@hotmail.com"))
+  person("Andrés", "Vinueza", role=c("aut"), email="andres.vinueza@epn.edu.ec",comment = c(ORCID = "0000")  ))
+Maintainer: Fabio H Sepúlveda-Murillo <fhsepulveda@udemedellin.edu.co>
 Description: This package provides statistical tools to build Composite indexes."index" includes functions to
              calibrate diffent metrics; the P2 Distance (DP2) of Pena Trapero (Trapero, 1977) and Distance-Learning (DL2)
              (Jiménez-Fernández & Ortega-Pérez, 2022).
-Maintainer: Fabio H Sepúlveda-Murillo <fhsepulveda@udemedellin.edu.co>
-            Andrés Vinueza <andresarmand@hotmail.com>
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

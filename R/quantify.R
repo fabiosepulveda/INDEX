@@ -12,13 +12,13 @@
 #' @importFrom Gifi homals
 #'
 #' @author
-#' Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
+#' Eduardo Jiménez: \email{edjimfer@ugr.es}
 #'
 #' @references
 #' Gifi, A. (1990). Nonlinear Multivariate Analysis. New York: Wiley
 #'
 #' @seealso
-#' Fabio
+#' Gifi
 #'
 #' @examples
 #'

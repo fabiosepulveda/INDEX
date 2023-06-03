@@ -11,7 +11,8 @@
 #'
 #'
 #' @author
-#' Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
+#' Eduardo Jiménez: \email{edjimfer@ugr.es}
+#' Angeles Sánchez: \email{sancheza@ugr.es}
 #'
 #' @references
 #' Jiménez-Fernández, E., Sánchez, A., & Ortega-Pérez, M. (2022). Dealing with weighting scheme in composite indicators: an unsupervised distance-machine learning proposal for quantitative data. Socio-Economic Planning Sciences, 83, 101339.

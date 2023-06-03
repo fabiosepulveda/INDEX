@@ -31,8 +31,8 @@ quantify(LondonHouse,qualitative)
 Gifi, A. (1990). Nonlinear Multivariate Analysis. New York: Wiley
 }
 \seealso{
-Fabio
+Gifi
 }
 \author{
-Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
+Eduardo Jiménez: \email{edjimfer@ugr.es}
 }

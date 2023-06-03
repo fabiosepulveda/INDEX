@@ -18,8 +18,10 @@
 #' @importFrom ggplot2 theme_classic
 #' @importFrom ggplot2 ggtitle
 #' @importFrom ggplot2 aes
+#'
 #' @author
 #' Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
+#' Andrés Vinueza:   \email{andres.vinueza@epn.edu.ec}
 #'
 #' @references
 #' Jiménez-Fernández, E., Sánchez, A., & Ortega-Pérez, M. (2022). Dealing with weighting scheme in composite indicators: an unsupervised distance-machine learning proposal for quantitative data. Socio-Economic Planning Sciences, 83, 101339.

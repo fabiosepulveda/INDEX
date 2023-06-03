@@ -32,5 +32,6 @@ Jiménez-Fernández, E., Sánchez, A., & Ortega-Pérez, M. (2022). Dealing with 
 Fabio
 }
 \author{
-Fabio Sepulveda:  \email{fhsepulveda@udemedellin.edu.co}
+Eduardo Jiménez: \email{edjimfer@ugr.es}
+Angeles Sánchez: \email{sancheza@ugr.es}
 }
