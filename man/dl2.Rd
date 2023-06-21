@@ -4,7 +4,16 @@
 \alias{dl2}
 \title{DL2 Function}
 \usage{
-dl2(x, polarity = NULL, alpha = 0.05, iterations, tau, prop_split, degrees)
+dl2(
+  x,
+  polarity = NULL,
+  alpha = 0.05,
+  qualitative = NULL,
+  iterations = 100,
+  tau,
+  prop_split = 0.8,
+  degrees
+)
 }
 \arguments{
 \item{x}{A numeric matrix or data frame which provides the data set with all the study variables.}
@@ -13,13 +22,15 @@ dl2(x, polarity = NULL, alpha = 0.05, iterations, tau, prop_split, degrees)
 
 \item{alpha}{maximum number of iterations for the algorithm}
 
-\item{iterations}{maximum}
+\item{qualitative}{numeric vector which provides the position of qualitative variables}
+
+\item{iterations}{maximum number of iterations}
 
 \item{tau}{error}
 
 \item{prop_split}{proportion}
 
-\item{degrees}{grados}
+\item{degrees}{degrees}
 }
 \value{
 Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity
@@ -29,11 +40,22 @@ This function computes a indicator
 }
 \examples{
 
+"Example 1"
 data(NUTS2)
 C <- NUTS2[,4:11]
 polarity <- c(5,6,7,8)
 dl2(C, polarity = polarity,  alpha = 0.05,
 iterations = 20,tau = 0.9,prop_split = 0.8,degrees = 1:2   )
+
+"Example 2"
+library("mlbench")
+data(BostonHousing)
+qualitative <- c(4,9)
+matriz <- as.data.frame(BostonHousing)
+matriz$rad <- as.factor(matriz$rad)
+polarity <- c(1,2,5,7,9)
+dim(BostonHousing)
+dl2(matriz,polarity =   polarity,qualitative = qualitative,0.05,10,0.9,0.8,1:3)
 
 }
 \references{

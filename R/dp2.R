@@ -6,6 +6,7 @@
 #' @param x A numeric matrix or data frame which provides the data set with all the study variables.
 #' @param epsilon  A double maximum number of distance accepted.
 #' @param iterations maximum number of iterations for the algorithm
+#' @param polarity polarity
 #'
 #' @return
 #' Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity
@@ -34,13 +35,12 @@
 #' data(NUTS2)
 #' C <- NUTS2[,4:11]
 #' polarity <- c(5,6,7,8)
-#' C <- matrix_normalization(C, polarity)
-#' dp2(C, iterations=10 )
+#' dp2(C, iterations=10 ,polarity = polarity)
 #'
 #' @export
 #'
 #'
-dp2 <- function(x,iterations,epsilon = 0.0001){
+dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL){
 
   n <- ncol(x) #Variables
   m <- nrow(x) #Countrys
@@ -50,6 +50,40 @@ dp2 <- function(x,iterations,epsilon = 0.0001){
   }
 
   # Functions ---------------------------------------------------------------
+
+  normalization <- function(x,polarity=NULL){
+    matrix <- x
+    columns <- c(1:n)
+    pospol <- polarity
+    if(!is.null(polarity)){
+      negpol <- columns[-pospol]
+    }else{
+      negpol <- NULL
+    }
+
+    normdata <- matrix(0,ncol = ncol(matrix),nrow = nrow(matrix))
+
+    norm_minmax <- function(x){
+      (x- min(x)) /(max(x)-min(x))
+    }
+
+    norm_maxmin <- function(x){
+      (max(x)-x) /(max(x)-min(x))
+    }
+
+    for(j in pospol){
+      normdata[,j]= norm_minmax(matrix[,j])
+    }
+
+    for(j in negpol){
+      normdata[,j]= norm_maxmin(matrix[,j])
+    }
+    normdata <- as.data.frame(normdata)
+    colnames(normdata) = colnames(x)
+    rownames(normdata) <- rownames(x)
+    return(normdata)
+  }
+
   t_abs <- function(x,n,m) {
     v1 <- t(apply(x, 1, function(y) abs(y) ))
     return(v1)
@@ -95,6 +129,7 @@ dp2 <- function(x,iterations,epsilon = 0.0001){
   }
 
   x <- as.matrix(x)
+  x <- normalization(x,polarity)
   # frechet distance
   h=Frechet(x,n,m)
   h <- as.matrix(h)
@@ -107,6 +142,7 @@ dp2 <- function(x,iterations,epsilon = 0.0001){
   TT =  DP2parcial(x,CC[[2]],CC[[3]],n,m)
 
   iteration <- 0
+  itera <- 2
 
   dist_list <- c()
   distance <- Inf
@@ -121,6 +157,13 @@ dp2 <- function(x,iterations,epsilon = 0.0001){
     dist_list <- c(dist_list,distance)
     cat(paste("Iteracion",iteration,"Distance" ))
     print(distance)
+
+    if(iteration>=itera){
+      if(abs(dist_list[iteration]-dist_list[iteration-1])<=epsilon/100 ){
+        warning("the itertions stops because the error is stable")
+        break
+      }
+    }
 
 
   }

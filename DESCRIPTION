@@ -22,7 +22,9 @@ Imports:
     corrgram (>= 1.14),
     vip (>= 0.3.2),
     utils,
-    Gifi
+    Gifi 
+Suggests:
+    mlbench
 URL: https://github.com/fabiosepulveda/index
 BugReports: https://github.com/fabiosepulveda/index/issues
 Depends: 

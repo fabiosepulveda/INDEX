@@ -5,10 +5,11 @@
 #' @param x A numeric matrix or data frame which provides the data set with all the study variables.
 #' @param polarity  A double maximum number of distance accepted.
 #' @param alpha maximum number of iterations for the algorithm
-#' @param iterations maximum
+#' @param qualitative numeric vector which provides the position of qualitative variables
+#' @param iterations maximum number of iterations
 #' @param tau error
 #' @param prop_split proportion
-#' @param degrees grados
+#' @param degrees degrees
 #'
 #'
 #'
@@ -46,11 +47,22 @@
 #'
 #' @examples
 #'
+#' "Example 1"
 #' data(NUTS2)
 #' C <- NUTS2[,4:11]
 #' polarity <- c(5,6,7,8)
 #' dl2(C, polarity = polarity,  alpha = 0.05,
 #' iterations = 20,tau = 0.9,prop_split = 0.8,degrees = 1:2   )
+#'
+#' "Example 2"
+#' library("mlbench")
+#' data(BostonHousing)
+#' qualitative <- c(4,9)
+#' matriz <- as.data.frame(BostonHousing)
+#' matriz$rad <- as.factor(matriz$rad)
+#' polarity <- c(1,2,5,7,9)
+#' dim(BostonHousing)
+#' dl2(matriz,polarity =   polarity,qualitative = qualitative,0.05,10,0.9,0.8,1:3)
 #'
 #' @export
 #'
@@ -60,10 +72,30 @@
 #'
 
 
-dl2 <-function(x, polarity = NULL,alpha=0.05,iterations,tau,prop_split,degrees){
+dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
+                    iterations=100,tau,prop_split=0.8,degrees){
+  if (!is.data.frame(x)) {
+    warning("the argument 'x' would be a data.frame object")
+    x <- as.data.frame(x)
+  }
+  ################# Quantification of the qualitative variables
+  if(!is.null(qualitative)){
+    cuanti <-function(x,qualitative){
+      if(is.null(qualitative)){
+        x <- x
+      } else
+      {matqual <- x[,qualitative]
+      fitmatqual <- homals(matqual,ndim = 1)
+      clnames <- colnames(matqual)
+      matquan <- fitmatqual$scoremat
+      x[,colnames(matquan)]<- matquan}
+      return(x)
+    }
+  }
 
   ################# Functions
   # Normalization compatible with respect to the polarity of indicators
+
   normalization <- function(x,polarity=NULL){
     names_var <- colnames(x)
     names_regions <- rownames(x)
@@ -98,11 +130,8 @@ dl2 <-function(x, polarity = NULL,alpha=0.05,iterations,tau,prop_split,degrees){
     return(normdata)
   }
 
-  # Corrgram
-  corrgr <- corrgram(x, order=TRUE, lower.panel=panel.shade, upper.panel=panel.pie, text.panel=panel.txt, main="Correlation between each features present in the data")
   ## Metric
-
-  calculateDistance = function(x){
+  calcularDistancia = function(x){
     mDif.sqr <- x^2
     return(mDif.sqr)
   }
@@ -188,33 +217,49 @@ dl2 <-function(x, polarity = NULL,alpha=0.05,iterations,tau,prop_split,degrees){
   n <- dim(x)[2]
   error.d <- numeric()
   weights <- c(rep(1,ncol(x)))
-  resultados <- list()
-  normmat <- normalization(x,polarity)
-  mDif <- calculateDistance(normmat);mDif
+  if(!is.null(qualitative)){
+    matri <- as.matrix(cuanti(x,qualitative))
+  }else{
+    matri <- as.matrix(x)
+  }
+  normat <- normalization(matri,polarity)
+  corrgr <- corrgram(normat, order=TRUE, lower.panel=panel.shade, upper.panel=panel.pie, text.panel=panel.txt, main="Correlation between each features present in the data")
+  mDif <- calcularDistancia(normat);mDif
   dp2_aux <- indexFrechet(mDif)
   dps <- dp2_aux
   iteration <- 1
-
+  itera <- 2
   repeat {
     print(paste("Iteration", iteration))
-    prop_split <- 0.8
-    weigths <- weigthFactors(normmat,dps,prop_split,degrees)
+    weigths <- weigthFactors(normat,dps,prop_split,degrees)
     calcDP2 <- calculateDP2(mDif,weigths[[1]])
     d2_ite <- calcDP2[[1]]
     matrixind <- calcDP2[[2]]
     test <- cor.test(as.vector(d2_ite), as.vector(dps),
                      alternative = c("two.sided"),
-                     method = c("kendall"), conf.level = 0.95)
+                     method = c("kendall"), conf.level = 1-alpha)
     error.d <- c(error.d,test$estimate,test$p.value)
     if (((test$p.value < alpha) && (test$estimate > tau)) || (iteration >= iterations)) {
       break
+    }
+
+
+    if(iteration>=itera){
+      if( abs(error.d[2*iteration-3]-error.d[2*iteration-1])<=alpha/100 ){
+        warning("the itertions stops because the error is stable")# No es el error es el estimadfos
+        break
+      }
     }
     iteration <- iteration + 1
     dps=d2_ite
   }
 
+
   invisible(return(list(
     tau = error.d,
+    normat = normat,
+    frechet = dp2_aux,
+    matquan = matri,
     plot = weigths[[6]],
     corrgr  = corrgr,
     Comp.Indicator = d2_ite,
@@ -228,6 +273,7 @@ dl2 <-function(x, polarity = NULL,alpha=0.05,iterations,tau,prop_split,degrees){
     testPredictError = weigths[[4]],
     CorrtestPredict = weigths[[5]]
   ) ))
+
 }
 
 utils::globalVariables(c("nprune", "degree","C.Ind"))
