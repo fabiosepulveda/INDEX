@@ -40,7 +40,7 @@
 #' @export
 #'
 #'
-dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL){
+dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL,qualitative=NULL){
 
   n <- ncol(x) #Variables
   m <- nrow(x) #Countrys
@@ -123,12 +123,30 @@ dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL){
     return(v1)
   }
 
+  if(!is.null(qualitative)){
+    cuanti <-function(x,qualitative){
+      if(is.null(qualitative)){
+        x <- x
+      } else
+      {matqual <- x[,qualitative]
+      fitmatqual <- homals(matqual,ndim = 1)
+      clnames <- colnames(matqual)
+      matquan <- fitmatqual$scoremat
+      x[,colnames(matquan)]<- matquan}
+      return(x)
+    }
+  }
   #Assign names to data base
   if(is.null(colnames(x))){
     colnames(x) <- 1:ncol(x)
   }
 
-  x <- as.matrix(x)
+
+  if(!is.null(qualitative)){
+    x <- as.matrix(cuanti(x,qualitative))
+  }else{
+    x <- as.matrix(x)
+  }
   x <- normalization(x,polarity)
   # frechet distance
   h=Frechet(x,n,m)

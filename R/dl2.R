@@ -51,8 +51,8 @@
 #' data(NUTS2)
 #' C <- NUTS2[,4:11]
 #' polarity <- c(5,6,7,8)
-#' dl2(C, polarity = polarity,  alpha = 0.05,
-#' iterations = 20,tau = 0.9,prop_split = 0.8,degrees = 1:2   )
+#' dl2(C, polarity = polarity, alpha = 0.05,
+#' iterations = 20,tau = 0.9,prop_split = 0.8,degrees = 1:2 )
 #'
 #' "Example 2"
 #' library("mlbench")
@@ -62,15 +62,10 @@
 #' matriz$rad <- as.factor(matriz$rad)
 #' polarity <- c(1,2,5,7,9)
 #' dim(BostonHousing)
-#' dl2(matriz,polarity =   polarity,qualitative = qualitative,0.05,10,0.9,0.8,1:3)
+#' dl2(matriz,polarity = polarity,qualitative = qualitative,0.05,10,0.9,0.8,1:3)
 #'
 #' @export
 #'
-#'
-#'
-#'
-#'
-
 
 dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
                     iterations=100,tau,prop_split=0.8,degrees){
