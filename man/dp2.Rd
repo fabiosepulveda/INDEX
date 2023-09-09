@@ -14,6 +14,8 @@ dp2(x, iterations, epsilon = 1e-04, polarity = NULL, qualitative = NULL)
 \item{epsilon}{A double maximum number of distance accepted.}
 
 \item{polarity}{polarity}
+
+\item{qualitative}{numeric vector which provides the position of qualitative variables}
 }
 \value{
 Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity

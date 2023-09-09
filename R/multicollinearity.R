@@ -38,7 +38,7 @@ multicollinearity <- function(x){
   l <- data.frame()
 
   for (variable in vars) {
-    lm1<-lm( as.formula( paste0(variable,"~.")),data=x)
+    lm1 <-lm( as.formula( paste0(variable,"~.")),data = x)
     options(scipen = 9990)
     v <- vif(lm1)
     l <- bind_rows(l,v)

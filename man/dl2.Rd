@@ -7,10 +7,10 @@
 dl2(
   x,
   polarity = NULL,
-  alpha = 0.05,
   qualitative = NULL,
+  alpha = 0.05,
   iterations = 100,
-  tau,
+  tau = 0.9,
   prop_split = 0.8,
   degrees
 )
@@ -20,9 +20,9 @@ dl2(
 
 \item{polarity}{A double maximum number of distance accepted.}
 
-\item{alpha}{maximum number of iterations for the algorithm}
-
 \item{qualitative}{numeric vector which provides the position of qualitative variables}
+
+\item{alpha}{maximum number of iterations for the algorithm}
 
 \item{iterations}{maximum number of iterations}
 

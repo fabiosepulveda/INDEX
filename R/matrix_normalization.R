@@ -29,14 +29,14 @@
 #'
 #' @export
 
-matrix_normalization <- function(x,polarity =NULL){
-  n <- ncol(x) #Variables
-  m <- nrow(x) #Countrys
+matrix_normalization <- function(x,polarity = NULL){
+  n <- ncol(x)
+  m <- nrow(x)
   if (sum(is.na(x)) >0) {
-    warning("there are NA's in the data")
+    warning("There are NA's in the data")
   }
   if (!is.matrix(x)) {
-    warning("the argument 'matriz' would be a matrix object")
+    warning("The argument 'x' would be a matrix object")
     x <- as.matrix(x)
   }
 
@@ -62,16 +62,16 @@ matrix_normalization <- function(x,polarity =NULL){
     }
 
     for(j in pospol){
-      normdata[,j]= norm_minmax(matrix[,j])
+      normdata[,j] <- norm_minmax(matrix[,j])
     }
 
     for(j in negpol){
-      normdata[,j]= norm_maxmin(matrix[,j])
+      normdata[,j] <- norm_maxmin(matrix[,j])
     }
     normdata <- as.data.frame(normdata)
-    colnames(normdata) = colnames(x)
+    colnames(normdata) <- colnames(x)
     rownames(normdata) <- rownames(x)
     return(normdata)
   }
-  invisible(return(normalization(x,polarity )))
+  invisible(return(normalization(x, polarity)))
 }

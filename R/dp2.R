@@ -7,6 +7,7 @@
 #' @param epsilon  A double maximum number of distance accepted.
 #' @param iterations maximum number of iterations for the algorithm
 #' @param polarity polarity
+#' @param qualitative numeric vector which provides the position of qualitative variables
 #'
 #' @return
 #' Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity
@@ -42,14 +43,12 @@
 #'
 dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL,qualitative=NULL){
 
-  n <- ncol(x) #Variables
-  m <- nrow(x) #Countrys
+  n <- ncol(x)
+  m <- nrow(x)
 
   if (sum(is.na(x)) >0) {
     warning("there are NA's in the data")
   }
-
-  # Functions ---------------------------------------------------------------
 
   normalization <- function(x,polarity=NULL){
     matrix <- x
@@ -72,14 +71,14 @@ dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL,qualitative=NULL){
     }
 
     for(j in pospol){
-      normdata[,j]= norm_minmax(matrix[,j])
+      normdata[,j] <- norm_minmax(matrix[,j])
     }
 
     for(j in negpol){
-      normdata[,j]= norm_maxmin(matrix[,j])
+      normdata[,j] <-  norm_maxmin(matrix[,j])
     }
     normdata <- as.data.frame(normdata)
-    colnames(normdata) = colnames(x)
+    colnames(normdata) <- colnames(x)
     rownames(normdata) <- rownames(x)
     return(normdata)
   }
@@ -89,42 +88,40 @@ dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL,qualitative=NULL){
     return(v1)
   }
 
-
-
-  order_data = function(x,n,m){
-    l = cor(x)
-    p=abs(l[1:n,ncol(l)])
+  order_data <-  function(x,n,m){
+    l <- cor(x)
+    p <- abs(l[1:n,ncol(l)])
     orden <- colnames(x)[order(p,decreasing = TRUE)]
     x <- x[,1:(n)]
 
-    DD = subset(t_abs(x,n,m) ,select = orden)
-    DD = as.matrix(DD)
-    C = rep(0,ncol(DD))
+    DD <- subset(t_abs(x,n,m) ,select = orden)
+    DD <- as.matrix(DD)
+    C <- rep(0,ncol(DD))
 
     for (i in 2:ncol(DD)) {
-      modelo = lm(DD[,i]~DD[,1:i-1])
-      C[i] = summary(modelo)$r.squared
+      modelo <- lm(DD[,i]~DD[,1:i-1])
+      C[i] <- summary(modelo)$r.squared
 
     }
-    W = list(correlations = p, DataOrdered = DD, Coefs.determi = C)
+    W <- list(correlations = p, DataOrdered = DD, Coefs.determi = C)
     return(W)
   }
 
-  DP2parcial = function(x,z1,z2,n,m){
-    q = as.matrix(1-z2)
-    AA = z1%*%q
-    R = cbind(t_abs(x,n,m),Indicador=AA)
+  DP2parcial <- function(x,z1,z2,n,m){
+    q <- as.matrix(1-z2)
+    AA <- z1%*%q
+    R <- cbind(t_abs(x,n,m),Indicador=AA)
     return(R)
   }
 
-  Frechet = function(x, n, m){
+  Frechet <- function(x, n, m){
     v1 <- t_abs(x, n, m)
     v1 <- rowSums(v1)
     return(v1)
   }
 
   if(!is.null(qualitative)){
-    cuanti <-function(x,qualitative){
+    cuanti <- function(x,qualitative){
       if(is.null(qualitative)){
         x <- x
       } else
@@ -136,49 +133,43 @@ dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL,qualitative=NULL){
       return(x)
     }
   }
-  #Assign names to data base
+
   if(is.null(colnames(x))){
     colnames(x) <- 1:ncol(x)
   }
-
 
   if(!is.null(qualitative)){
     x <- as.matrix(cuanti(x,qualitative))
   }else{
     x <- as.matrix(x)
   }
+
   x <- normalization(x,polarity)
-  # frechet distance
-  h=Frechet(x,n,m)
+  h <- Frechet(x,n,m)
   h <- as.matrix(h)
+  G <- cbind(as.matrix(t_abs(x,n,m)),h)
+  CC <- order_data(G,n,m)
 
-  G = cbind(as.matrix(t_abs(x,n,m)),h)
-
-  CC = order_data(G,n,m)
-
-
-  TT =  DP2parcial(x,CC[[2]],CC[[3]],n,m)
+  TT <- DP2parcial(x,CC[[2]],CC[[3]],n,m)
 
   iteration <- 0
   itera <- 2
-
   dist_list <- c()
   distance <- Inf
   while ((iteration <= iterations) && (epsilon <= distance)) {
 
     iteration = iteration + 1
-
     Y <-  TT
     CC <-  order_data(Y,n,m)
     TT <- DP2parcial(x,CC[[2]],CC[[3]],n,m)
     distance <-  mean(abs(TT[,ncol(x)+1] - Y[,ncol(x)+1]))
     dist_list <- c(dist_list,distance)
-    cat(paste("Iteracion",iteration,"Distance" ))
+    cat(paste("Iteration",iteration,"Distance" ))
     print(distance)
 
     if(iteration>=itera){
       if(abs(dist_list[iteration]-dist_list[iteration-1])<=epsilon/100 ){
-        warning("the itertions stops because the error is stable")
+        warning("The itertions stops because the error is stable")
         break
       }
     }
@@ -203,7 +194,7 @@ dp2 <- function(x,iterations,epsilon = 0.0001,polarity=NULL,qualitative=NULL){
     iteration = iteration,
     Names.Single.Ind = colnames(x),
     Order =  colnames(CC$DataOrdered),
-    Coefficient.Determination <- CC$Coefs.determi
+    Coefficient.Determination = CC$Coefs.determi
 
   ) ))
 }

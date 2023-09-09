@@ -31,14 +31,16 @@
 #'
 #' @export
 
-quantify <-function(x,y){
+quantify <- function(x,y){
   if(is.null(y)){
     x <- x
   } else
-  {matqual <- x[,y]
-  fitmatqual <- homals(matqual,ndim = 1)
-  clnames <- colnames(matqual)
-  matquan <- fitmatqual$scoremat
-  x[,colnames(matquan)]<- matquan}
+  {
+    matqual <- x[,y]
+   fitmatqual <- homals(matqual,ndim = 1)
+   clnames <- colnames(matqual)
+   matquan <- fitmatqual$scoremat
+   x[,colnames(matquan)] <- matquan
+  }
   return(x)
 }

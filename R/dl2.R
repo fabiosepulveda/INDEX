@@ -67,13 +67,14 @@
 #' @export
 #'
 
-dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
-                    iterations=100,tau,prop_split=0.8,degrees){
+dl2 <-function(x,polarity=NULL,qualitative=NULL,alpha =0.05,
+                    iterations=100,tau=0.9,prop_split=0.8,degrees){
+
   if (!is.data.frame(x)) {
-    warning("the argument 'x' would be a data.frame object")
+    warning("The argument 'x' would be a data.frame object")
     x <- as.data.frame(x)
   }
-  ################# Quantification of the qualitative variables
+
   if(!is.null(qualitative)){
     cuanti <-function(x,qualitative){
       if(is.null(qualitative)){
@@ -87,9 +88,6 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
       return(x)
     }
   }
-
-  ################# Functions
-  # Normalization compatible with respect to the polarity of indicators
 
   normalization <- function(x,polarity=NULL){
     names_var <- colnames(x)
@@ -113,11 +111,11 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
     }
 
     for(j in pospol){
-      normdata[,j]= norm_minmax(x[,j])
+      normdata[,j] <- norm_minmax(x[,j])
     }
 
     for(j in negpol){
-      normdata[,j]= norm_maxmin(x[,j])
+      normdata[,j] <- norm_maxmin(x[,j])
     }
     normdata <- as.data.frame(normdata)
     colnames(normdata) <-  names_var
@@ -125,21 +123,20 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
     return(normdata)
   }
 
-  ## Metric
-  calcularDistancia = function(x){
+  calcularDistancia <- function(x){
     mDif.sqr <- x^2
     return(mDif.sqr)
   }
-  ## First composite indicator indicator, allwieghts equal to one
+
+  #First composite indicator, all weights equal to one
   indexFrechet = function(x) {
     iF <- sqrt(matrix(rowSums(x), ncol = 1))
     colnames(iF) <- "Frechet.Index"
     return(iF)
   }
-  ## Compute weights throught MARS and variable importance
-  weigthFactors = function(x,Comp.ind,prop_split,degrees){
-    #x <- normmat
-    #Comp.ind =dps
+
+  # Compute weights throught MARS and variable importance
+  weigthFactors <- function(x,Comp.ind,prop_split,degrees){
     m <- ncol(x)
     dat_os <- x
     x$C.Ind <- Comp.ind
@@ -164,14 +161,13 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
     )
     # Plot best accuracy
     plt <- plot(tuned_mars)
-    #display model with lowest test RMSE
+    #Display model with lowest test RMSE
     resultsOpt <- tuned_mars$results %>%
       filter(nprune==tuned_mars$bestTune$nprune, degree==tuned_mars$bestTune$degree)
     # Now, we want to check our data on the test set.
-
-    test.features = subset(vul_test, select=-C.Ind)
-    test.target = subset(vul_test, select=C.Ind )[,1]
-    predictions = predict(tuned_mars, newdata = test.features)
+    test.features <- subset(vul_test, select=-C.Ind)
+    test.target <- subset(vul_test, select=C.Ind )[,1]
+    predictions <- predict(tuned_mars, newdata = test.features)
     # RMSE
     RMSEtestPredictError <- sqrt(mean((test.target - predictions)^2))
     # R2
@@ -180,12 +176,12 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
     p2 <- vi(tuned_mars,method = "firm",sort =FALSE,decreasing = FALSE)
     Variable <- p2$Variable
     weigths <- p2$Importance
-    mini = min(weigths[weigths > 0])
+    mini <- min(weigths[weigths > 0])
     for(j in 1:m){
       if(is.na(weigths[j])) { print('Missing values has been found')}
       else
       {if(weigths[j]==0){
-        weigths[j]=mini/m
+        weigths[j] <- mini/m
       }
       }
     }
@@ -196,8 +192,9 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
     important <- list(as.numeric(res.ord),names(res.ord),resultsOpt, RMSEtestPredictError,CorrtestPredict,plt)
     return(important)
   }
+
   # Function to compute the composite indicator with the above weights
-  calculateDP2 = function(x, xFactores, iteration = 1) {
+  calculateDP2 <- function(x, xFactores, iteration = 1) {
     n <- dim(x)[1]
     m <- dim(x)[2]
     coefs <- matrix(xFactores, n, m, byrow = TRUE)
@@ -208,7 +205,7 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
     calcDP2 <- list(DP2,mDP)
     return(calcDP2)
   }
-  ############## Algorithm
+
   n <- dim(x)[2]
   error.d <- numeric()
   weights <- c(rep(1,ncol(x)))
@@ -241,12 +238,12 @@ dl2 <-function(x,polarity=NULL,alpha =0.05,qualitative=NULL,
 
     if(iteration>=itera){
       if( abs(error.d[2*iteration-3]-error.d[2*iteration-1])<=alpha/100 ){
-        warning("the itertions stops because the error is stable")# No es el error es el estimadfos
+        warning("The itertions stops because the error is stable")
         break
       }
     }
     iteration <- iteration + 1
-    dps=d2_ite
+    dps <- d2_ite
   }
 
 
