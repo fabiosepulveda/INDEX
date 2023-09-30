@@ -1,15 +1,17 @@
 #' DL2 Function
 #'
 #' @description
-#' This function computes a indicator
+#' The methodology used is that of distance synthetic indicator "DP2". This indicator, defined by Pena Trapero.
+#'
+#'
 #' @param x A numeric matrix or data frame which provides the data set with all the study variables.
-#' @param polarity  A double maximum number of distance accepted.
-#' @param alpha maximum number of iterations for the algorithm
-#' @param qualitative numeric vector which provides the position of qualitative variables
-#' @param iterations maximum number of iterations
-#' @param tau error
-#' @param prop_split proportion
-#' @param degrees degrees
+#' @param polarity A numeric vector that provides all the positions of the variables that are positively correlated with the latent variable (index).
+#' @param alpha Significance level of the Kendall correlation coefficient test. Default is 0.05.
+#' @param qualitative A numeric vector which provides the position of qualitative variables.
+#' @param iterations Maximum number of iterations to calculate the index. Default is 20.
+#' @param tau A numeric value in the interval 0.9 to 1 to compare two consecutive composite indicators. Default is 0.9.
+#' @param prop_split Proportion data to compute the weights (corresponding to the variable importance) of index. Default is 0.8.
+#' @param degrees Polynomial degrees to compute the weights (corresponding to the variable importance) of index.
 #'
 #'
 #'
@@ -68,7 +70,7 @@
 #'
 
 dl2 <-function(x,polarity=NULL,qualitative=NULL,alpha =0.05,
-                    iterations=100,tau=0.9,prop_split=0.8,degrees){
+                    iterations=20,tau=0.9,prop_split=0.8,degrees){
 
   if (!is.data.frame(x)) {
     warning("The argument 'x' would be a data.frame object")
