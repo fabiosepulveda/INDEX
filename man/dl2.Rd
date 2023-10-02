@@ -26,7 +26,7 @@ dl2(
 
 \item{iterations}{Maximum number of iterations to calculate the index. Default is 20.}
 
-\item{tau}{A numeric value in the interval 0.9 to 1 to compare two consecutive composite indicators. Default is 0.9.}
+\item{tau}{A numeric value in the interval from 0.9 to 1 to compare two consecutive composite indicators. Default is 0.9.}
 
 \item{prop_split}{Proportion data to compute the weights (corresponding to the variable importance) of index. Default is 0.8.}
 
@@ -36,7 +36,7 @@ dl2(
 Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity
 }
 \description{
-The methodology used is that of distance synthetic indicator "DP2". This indicator, defined by Pena Trapero.
+This function computes a weighted composite indicator using machine learning techniques to build a distance. This method take the P2 Distance method of Pena Trapero as a starting point and improve its limitations.
 }
 \examples{
 

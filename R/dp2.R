@@ -1,7 +1,7 @@
 #' DP2 Function
 #'
 #' @description
-#' This function computes a indicator
+#' The methodology used is that of distance synthetic indicator "DP2". This indicator, defined by Pena Trapero.
 #'
 #' @param x A numeric matrix or data frame which provides the data set with all the study variables.
 #' @param epsilon  A double maximum number of distance accepted.

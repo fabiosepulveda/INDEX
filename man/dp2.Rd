@@ -21,7 +21,7 @@ dp2(x, iterations, epsilon = 1e-04, polarity = NULL, qualitative = NULL)
 Return the a matrix with the variance inflation factor and a boolean variable if there is multicollinearity
 }
 \description{
-This function computes a indicator
+The methodology used is that of distance synthetic indicator "DP2". This indicator, defined by Pena Trapero.
 }
 \examples{
 
